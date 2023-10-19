@@ -55,10 +55,12 @@ images.forEach((img, index, array) => {
     carouselDOMElement.innerHTML += html    
 })
 
-const carouselCardDOMElements = document.querySelector('.carousel-card')
-carouselCardDOMElements.classList.add('active')
-console.log(carouselCardDOMElements)
+let indexCarouselCard = 0;
 
+const carouselCardDOMElements = document.querySelectorAll('.carousel-card')
+carouselCardDOMElements[indexCarouselCard].classList.add('active')
+
+let firstFigure = carouselCardDOMElements[indexCarouselCard];
 
 
 // - recupero il bottone dal DOM
@@ -66,7 +68,27 @@ const downButtonDOMElement = document.getElementById('down-button');
 
 
 downButtonDOMElement.addEventListener ('click',function () {  
-    carouselCardDOMElements.classList.remove('active');         
-        
+    carouselCardDOMElements[indexCarouselCard].classList.remove('active');
+    indexCarouselCard++
+    if (indexCarouselCard >= carouselCardDOMElements.length) {
+        indexCarouselCard = 0
+    }
+    carouselCardDOMElements[indexCarouselCard].classList.add('active'); 
 })
+
+const upButtonDOMElement = document.getElementById('up-button');
+
+upButtonDOMElement.addEventListener ('click',function () {  
+    carouselCardDOMElements[indexCarouselCard].classList.remove('active');          
+    indexCarouselCard--;
+    
+    if (indexCarouselCard < 0) {
+        indexCarouselCard = carouselCardDOMElements.length - 1;                
+    }
+    
+    carouselCardDOMElements[indexCarouselCard].classList.add('active');
+    
+
+})
+
 
