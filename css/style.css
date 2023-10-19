@@ -48,10 +48,19 @@ img {
     cursor: pointer;  
 }
 
-.description {
+.description {    
     position: absolute;
     color: white;
     right: 15px;
     bottom: 30px;
+    text-align: end;
 
+}
+
+.carousel-card {
+    display: none;
+}
+
+.active {
+    display: block;
 }
