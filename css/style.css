@@ -64,3 +64,23 @@ img {
 .active {
     display: block;
 }
+
+#auto-play {
+    margin: 0 auto;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.btns {    
+    margin-top: 20px;
+    background-color: blueviolet;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+

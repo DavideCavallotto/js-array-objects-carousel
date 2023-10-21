@@ -35,8 +35,7 @@ images.forEach((img, index, array) => {
     const imgGame = img.image
     const imgTitle = img.title
     const imgText = img.text
-
-    console.log(imgGame)
+   
 
     const html = `  
     <div class="carousel-card">   
@@ -60,35 +59,79 @@ let indexCarouselCard = 0;
 const carouselCardDOMElements = document.querySelectorAll('.carousel-card')
 carouselCardDOMElements[indexCarouselCard].classList.add('active')
 
-let firstFigure = carouselCardDOMElements[indexCarouselCard];
-
 
 // - recupero il bottone dal DOM
 const downButtonDOMElement = document.getElementById('down-button');
 
 
 downButtonDOMElement.addEventListener ('click',function () {  
-    carouselCardDOMElements[indexCarouselCard].classList.remove('active');
-    indexCarouselCard++
-    if (indexCarouselCard >= carouselCardDOMElements.length) {
-        indexCarouselCard = 0
-    }
-    carouselCardDOMElements[indexCarouselCard].classList.add('active'); 
+
+    indexCarouselCard = showNextCarouselCard(carouselCardDOMElements, indexCarouselCard)
+    console.log()
 })
 
 const upButtonDOMElement = document.getElementById('up-button');
 
 upButtonDOMElement.addEventListener ('click',function () {  
-    carouselCardDOMElements[indexCarouselCard].classList.remove('active');          
-    indexCarouselCard--;
     
-    if (indexCarouselCard < 0) {
-        indexCarouselCard = carouselCardDOMElements.length - 1;                
-    }
-    
-    carouselCardDOMElements[indexCarouselCard].classList.add('active');
+    indexCarouselCard = showPreviousCarouselCard(carouselCardDOMElements, indexCarouselCard)
     
 
 })
 
 
+function showNextCarouselCard(carouselCardDOMElements, indexCarouselCard) {
+    // Rimuove la classe 'active' dal carousel card corrente
+    carouselCardDOMElements[indexCarouselCard].classList.remove('active');
+
+    // Incrementa l'indice del carousel card
+    indexCarouselCard++;
+
+    // Verifica se l'indice supera la lunghezza del carouselCardDOMElements
+    if (indexCarouselCard >= carouselCardDOMElements.length) {
+        // Se sì, resetta l'indice a 0
+        indexCarouselCard = 0;
+    }
+
+    // Aggiunge la classe 'active' al prossimo carousel card
+    carouselCardDOMElements[indexCarouselCard].classList.add('active');
+
+    // Restituisce il nuovo indice per l'uso successivo, se necessario
+    return indexCarouselCard;
+}
+
+function showPreviousCarouselCard(carouselCardDOMElements, indexCarouselCard) {
+    // Rimuove la classe 'active' dal carousel card corrente
+    carouselCardDOMElements[indexCarouselCard].classList.remove('active');
+
+    // Decrementa l'indice del carousel card
+    indexCarouselCard--;
+
+    // Verifica se l'indice è inferiore a 0
+    if (indexCarouselCard < 0) {
+        // Se sì, resetta l'indice al numero massimo di carousel cards
+        indexCarouselCard = carouselCardDOMElements.length - 1;
+    }
+
+    // Aggiunge la classe 'active' al carousel card precedente
+    carouselCardDOMElements[indexCarouselCard].classList.add('active');
+
+    // Restituisce il nuovo indice per l'uso successivo, se necessario
+    return indexCarouselCard;
+}
+
+const autoPlayDOMElement = document.getElementById('auto-play');
+let interval3S;
+autoPlayDOMElement.addEventListener('click', function (){   
+     interval3S = setInterval(() => {
+        console.log(indexCarouselCard);
+        indexCarouselCard = showNextCarouselCard(carouselCardDOMElements, indexCarouselCard);
+    }, 3000);
+    
+})
+
+const stopDOMElement = document.getElementById('stop-btn')
+
+stopDOMElement.addEventListener('click', function () {    
+    clearInterval(interval3S)
+})
